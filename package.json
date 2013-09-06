@@ -1,0 +1,48 @@
+{
+  "name": "cortado",
+  "version": "0.0.0",
+  "description": "cortado =======",
+  "main": "./lib/index.js",
+  "bin": {
+    "cortado": "./bin/cortado"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crcn/cortado.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "a77294ab43fd6847b61d3aaf99a819e820cea8e3",
+  "dependencies": {
+    "expect.js": "~0.2.0",
+    "coffee-script": "~1.6.3",
+    "mocha": "~1.12.1",
+    "funwrap": "0.0.0",
+    "bindable": "~0.4.0",
+    "paperclip": "~0.2.11",
+    "mojojs": "~0.6.8",
+    "fasten": "0.0.6",
+    "commander": "~2.0.0",
+    "underscore": "~1.5.1",
+    "http-proxy": "~0.10.3",
+    "express": "~3.3.8",
+    "jsdev": "~0.1.3",
+    "amdify": "0.0.24",
+    "glob": "~3.2.6"
+  },
+  "devDependencies": {
+    "mesh": "~0.2.5",
+    "less": "~1.4.2",
+    "coffee-script": "~1.6.3",
+    "colors": "~0.6.2",
+    "outcome": "0.0.18",
+    "mkdirp": "~0.3.5",
+    "request": "~2.27.0",
+    "jsdev": "~0.1.3",
+    "node-osx-notifier": "~0.1.0"
+  }
+}

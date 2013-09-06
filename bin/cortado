@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+var commander = require("commander"),
+cortado       = require(".."),
+_             = require("underscore"),
+path          = require("path")
+
+
+commander.
+option("--config [config_path]", "path to config").
+option("--full", "run full integration test");
+
+
+commander.
+command("server").
+description("run cortado server").
+action(function() {
+  cortado.start(_.extend(require(path.resolve(process.cwd(), commander.config)), {
+    full: commander.full
+  }))
+});
+
+
+
+commander.parse(process.argv);
