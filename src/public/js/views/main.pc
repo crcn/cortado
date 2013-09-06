@@ -1,4 +1,15 @@
-<h1>Tests</h1>
+<div class="main-container">
+  <div class="main-test-details">
+  </div>
 
-
-{{ html: sections.preview }}
+  <div class="main-right-col">
+    <div class="main-test-info">
+      Success: <strong>{{ successCount }}</strong> 
+      Failure: <strong>{{ failureCount }}</strong> 
+      Duration: <strong>{{ duration }}</strong> 
+    </div>
+    <div class="main-preview">
+      {{ html: sections.preview }}
+    </div>
+  </div>
+</div>
