@@ -10,7 +10,9 @@
     <script type="text/javascript" src="/test/js/app.bundle.js"></script>
     <script type="text/javascript" src="/test/js/scripts.bundle.js"></script>
     <script type="text/javascript">
-      mocha.run();
+      client.ready(function() {
+        mocha.run();
+      })
     </script>
 
 

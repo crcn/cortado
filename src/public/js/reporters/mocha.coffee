@@ -9,7 +9,7 @@ _getFullTitle = (test) ->
     p = p.parent
   buffer.join(" ")
 
-module.exports = (models) ->
+module.exports = (models, client) ->
   (runner) ->
     current = undefined
     successCount = 0
@@ -25,7 +25,6 @@ module.exports = (models) ->
     runner.on "end", () ->
       clearTimeout durInterval
 
-
     runner.on "test", (test) ->
       current = models.addLog {
         description: _getFullTitle(test),
@@ -33,7 +32,6 @@ module.exports = (models) ->
         state: test.state,
         pending: true,
       }
-
 
     runner.on "fail", (test, err) ->
       test.error = err
@@ -51,6 +49,17 @@ module.exports = (models) ->
         pending: false,
         success: test.state is "passed",
         state: test.state
+      }
+
+      if test.error 
+        err = {
+          message: test.error.message
+        }
+
+      client.send { 
+        event: "test", 
+        description: current.get("description"),
+        error: err
       }
 
       models.set {

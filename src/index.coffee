@@ -9,6 +9,7 @@ events     = require "events"
 gaze       = require "gaze"
 sockjs     = require "sockjs"
 http       = require "http"
+Clients    = require "./clients"
 
 ###
 ###
@@ -57,24 +58,17 @@ watchScripts = (options, callback) ->
   gaze options.scripts, () ->
     this.on "all", callback
 
+
 ###
 ###
-  
-createClients = (sock) ->
 
-  _clients = []
-
-  sock.on "connection", (con) ->
-    _clients.push con
-
-
-  {
-    send: (data) ->
-      for client in _clients
-        client.write JSON.stringify data
-  }
-
-
+watchTests = (clients) ->
+  clients.on "test", (data) ->
+    if data.error
+      console.error("✘", data.description)
+      console.error(data.error.message)
+    else
+      console.log("✔", data.description)
 
 ###
 ###
@@ -95,11 +89,12 @@ startServer = (options) ->
   app.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
     
   sock = sockjs.createServer({sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"})
-  clients = createClients(sock)
+  clients = new Clients(sock)
   sock.installHandlers(server, { prefix: "/sock" })
   app.use "/test/js/scripts.bundle.js", browserify(saveBundledScripts(clients, options))
 
   watchScripts options, () -> saveBundledScripts(clients, options)
+  watchTests clients
 
   # needed for cross-domain policy
   app.all "/**", (req, res) ->
