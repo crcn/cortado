@@ -5,6 +5,13 @@ browserify = require "browserify-middleware"
 glob       = require "glob"
 fs         = require "fs"
 crypto     = require "crypto"
+events     = require "events"
+gaze       = require "gaze"
+sockjs     = require "sockjs"
+http       = require "http"
+
+###
+###
 
 cacher = (options) ->
   
@@ -20,8 +27,10 @@ cacher = (options) ->
   (req, res, next) ->
 
 
-getIncScript = (options) ->
+###
+###
 
+saveBundledScripts = (clients, options) ->
   scripts = []
   for script in options.scripts
     scripts = glob.sync(script).concat(scripts)
@@ -36,8 +45,34 @@ getIncScript = (options) ->
   tmpScript = "/tmp/#{hash}.js"
   fs.writeFileSync tmpScript, buffer.join("\n;")
 
+
+  clients.send { event: "reload" }
+
   tmpScript
 
+###
+###
+
+watchScripts = (options, callback) ->
+  gaze options.scripts, () ->
+    this.on "all", callback
+
+###
+###
+  
+createClients = (sock) ->
+
+  _clients = []
+
+  sock.on "connection", (con) ->
+    _clients.push con
+
+
+  {
+    send: (data) ->
+      for client in _clients
+        client.write JSON.stringify data
+  }
 
 
 
@@ -47,20 +82,27 @@ getIncScript = (options) ->
 startServer = (options) ->
   options.cwd = process.cwd()
   proxy  = new httpProxy.RoutingProxy()
-  server = express()
+  app = express()
+  server = http.createServer app
   port   = options.port or 8083
 
   console.log "listening on port %d", port
 
   urlInfo = Url.parse options.proxy
 
-  server.use cacher options
-  server.use "/test", express.static __dirname + "/public"
-  server.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
-  server.use "/test/js/scripts.bundle.js", browserify(getIncScript(options))
+  app.use cacher options
+  app.use "/test", express.static __dirname + "/public"
+  app.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
+    
+  sock = sockjs.createServer({sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"})
+  clients = createClients(sock)
+  sock.installHandlers(server, { prefix: "/sock" })
+  app.use "/test/js/scripts.bundle.js", browserify(saveBundledScripts(clients, options))
+
+  watchScripts options, () -> saveBundledScripts(clients, options)
 
   # needed for cross-domain policy
-  server.all "/**", (req, res) ->
+  app.all "/**", (req, res) ->
     proxy.proxyRequest(req, res, {
       host: urlInfo.hostname,
       port: urlInfo.port

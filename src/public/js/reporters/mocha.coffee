@@ -21,17 +21,12 @@ module.exports = (models) ->
       models.set "testDuration", "#{++duration} s"
     ), 1000
 
-
-
-
-
     runner.on "start", () ->
     runner.on "end", () ->
       clearTimeout durInterval
 
 
     runner.on "test", (test) ->
-      console.log test
       current = models.addLog {
         description: _getFullTitle(test),
         type: "test",
