@@ -3,6 +3,8 @@ bindable = require "bindable"
 module.exports = (models) ->
   (runner) ->
     current = undefined
+    successCount = 0
+    failureCount = 0
 
     runner.on "start", () ->
 
@@ -20,6 +22,8 @@ module.exports = (models) ->
       test.error = err
 
     runner.on "test end", (test) ->
+
+      if test.error
       skipped = test.pending is true
       current.set {
         time: if skipped then 0 else test.duration,
@@ -29,7 +33,10 @@ module.exports = (models) ->
       }
 
       if test.error
-        
+        models.addLog {
+          description: test.error.message,
+          type: "error"
+        }
 
 
       

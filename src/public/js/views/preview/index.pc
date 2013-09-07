@@ -1,5 +1,4 @@
 <div>
-  {{location || models.control}}
   <iframe class="test-preview" src="{{location}}" data-bind="{{ onLoad: _onIFrameLoad() }}">
   </iframe>
 </div>

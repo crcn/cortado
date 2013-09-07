@@ -1,0 +1,5 @@
+<div class="main-test-info">
+  Success: <strong>{{ successCount }}</strong> 
+  Failure: <strong>{{ failureCount }}</strong> 
+  Duration: <strong>{{ testDuration }}</strong> 
+</div>

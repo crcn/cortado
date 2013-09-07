@@ -20,21 +20,4 @@ mocha.setup({
 })
 
 
-describe "abba", () ->
-  it "can login", (next) ->
-    actions.
-    visit("/logout").
-    visit("/").
-    type(xpath.find().eq("@id", "application").find().eq("@placeholder", "Username"), "liamdon").
-    type(xpath.find().eq("@id", "application").find().eq("@placeholder", "Password"), "password").
-    click(xpath.find().eq("@id", "login-button")).
-    then(next)
 
-  it "fails", (next) ->
-    actions.
-    click(xpath.find().eq("@id", "fsdfsd")).
-    then(next)
-
-
-
-mocha.run()

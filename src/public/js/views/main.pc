@@ -4,11 +4,7 @@
   </div>
 
   <div class="main-right-col">
-    <div class="main-test-info">
-      Success: <strong>{{ successCount }}</strong> 
-      Failure: <strong>{{ failureCount }}</strong> 
-      Duration: <strong>{{ duration }}</strong> 
-    </div>
+    {{html: sections.status }}
     <div class="main-preview">
       {{ html: sections.preview }}
     </div>
