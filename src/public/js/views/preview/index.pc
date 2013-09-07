@@ -1,2 +1,5 @@
-<iframe class="test-preview" src="{{url}}">
-</iframe>
+<div>
+  {{location || models.control}}
+  <iframe class="test-preview" src="{{location}}" data-bind="{{ onLoad: _onIFrameLoad() }}">
+  </iframe>
+</div>

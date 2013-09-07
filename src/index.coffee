@@ -5,6 +5,24 @@ browserify = require "browserify-middleware"
 glob       = require "glob"
 
 
+cacher = (options) ->
+  
+  # don't cache anything if full integration test
+  unless options.full
+    return (req, res, next) -> next()
+
+  cache = options.cache
+  types = cache.types
+  dir   = cache.directory
+  
+  # otherwise, cache everything
+  (req, res, next) ->
+
+
+
+###
+###
+
 startServer = (options) ->
   proxy  = new httpProxy.RoutingProxy()
   server = express()
@@ -14,6 +32,7 @@ startServer = (options) ->
 
   urlInfo = Url.parse options.proxy
 
+  server.use cacher options
   server.use "/test", express.static __dirname + "/public"
   server.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
 

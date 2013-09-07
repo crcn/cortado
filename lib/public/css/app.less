@@ -1,3 +1,10 @@
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
 //  LESS Hat 1.1.2
 //  LESSHat.com
 //  From creators of CSSHat.com
@@ -2197,23 +2204,6 @@
 
     //  element{ .gradient(~"linear-gradient(to right, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%)"); }
 
-.red {
-  color: red;
-}
-
-.green {
-  color: green;
-}
-.test-preview {
-  width: 1024px;
-  height: 768px;
-  border: 3px solid #444;
-  .border-radius(5px);
-  position: relative;
-  left: -1024/4px;
-  top: -768/4px;
-  .scale(0.5);
-}
 .main-container {
   padding: 20px;
   width: 100%;
@@ -2221,12 +2211,14 @@
 
 .main-test-details {
   width: 100%;
+  float: left;
 }
 
 .main-right-col {
   position: fixed;
   right: 20px;
   text-align: right;
+  float: right;
 }
 
 .main-test-info {
@@ -2246,4 +2238,20 @@
   left: -1024/4px;
   top: -768/4px;
   .scale(0.5);
+}
+.log-verbose {
+  font-size: 12px;
+  color: #999;
+  padding-left: 10px;
+}
+
+.log-test {
+  font-size: 20px;
+  font-weight: bold;
+} 
+ 
+.log-error {
+  font-size: 12px;
+  color: red;
+  padding-left: 10px;
 }

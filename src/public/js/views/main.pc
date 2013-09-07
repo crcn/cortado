@@ -1,5 +1,6 @@
 <div class="main-container">
   <div class="main-test-details">
+    {{ html: sections.logroll }}
   </div>
 
   <div class="main-right-col">

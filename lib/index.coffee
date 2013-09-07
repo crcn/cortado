@@ -5,6 +5,18 @@ browserify = require "browserify-middleware"
 glob       = require "glob"
 
 
+cacher = (options) ->
+
+  unless options.full
+    
+  
+
+  (req, res, next) ->
+
+
+###
+###
+
 startServer = (options) ->
   proxy  = new httpProxy.RoutingProxy()
   server = express()
@@ -14,15 +26,15 @@ startServer = (options) ->
 
   urlInfo = Url.parse options.proxy
 
+  server.use cacher options
   server.use "/test", express.static __dirname + "/public"
   server.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
 
   scripts = []
   for script in options.scripts
+    scripts = glob.sync(script).concat(scripts)
 
-  server.use "/test/js/scripts.bundle.js", browserify(options.scripts.map((path) ->
-    glob.sync(path)
-  ))
+  server.use "/test/js/scripts.bundle.js", browserify(scripts)
 
   # needed for cross-domain policy
   server.all "/**", (req, res) ->

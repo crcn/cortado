@@ -8,7 +8,7 @@ class MainView extends require("mojojs").View
   sections:
     preview: 
       type: require("./preview")
-    details:
-      type: require("./details")
+    logroll:
+      type: require("./logroll")
 
 module.exports = MainView

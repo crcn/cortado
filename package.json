@@ -32,7 +32,10 @@
     "express": "~3.3.8",
     "jsdev": "~0.1.3",
     "amdify": "0.0.24",
-    "glob": "~3.2.6"
+    "glob": "~3.2.6",
+    "mime": "~1.2.11",
+    "hurryup": "0.0.2",
+    "xpgen": "0.0.3"
   },
   "devDependencies": {
     "mesh": "~0.2.5",

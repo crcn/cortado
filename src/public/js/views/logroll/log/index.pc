@@ -1,0 +1,19 @@
+<div class="log">
+  
+
+  {{#if:model.type == "test" }}
+    
+    <span class="log-test">
+      <span class="log-status" data-bind="{{ style: { color: checkColor } }}">
+        {{ html: checkText }}
+      </span>
+
+      {{ model.description }}
+    </span>
+
+  {{/else: model.type == "error" }}
+    <span class="log-error">{{ model.description }}</span>
+  {{/else}}
+    <span class="log-verbose">{{ model.description }}</span>
+  {{/}}
+</div>

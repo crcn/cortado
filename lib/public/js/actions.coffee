@@ -71,11 +71,7 @@ module.exports = (models) ->
 
         return setTimeout next, 5, null, $els
 
-      ), { 
-        timeout: 1000 * 3, 
-        retry: true, 
-        retryTimeout: 100 
-      }
+      ), { timeout: 1000 * 3, retry: true, retryTimeout: 100 }
 
       fn.call @, path, next
 
@@ -84,13 +80,12 @@ module.exports = (models) ->
   fastener = fastener.wrap "actions", target
 
   fastener.on "error", () ->
-    models.addLog { description: "fail", success: false }
+    console.log arguments[0]
+
+  fastener.on "call", () ->
+    console.__log arguments[0]
 
   fastener.on "result", (data) ->
-    models.addLog { 
-      description: "#{data.method}(#{data.args.join(', ')})", 
-      success: true, 
-      type: "action" 
-    }
+    models.get("logs").push new Log { text: "#{data.method}(#{data.args.join(", "))" }
 
   fastener
