@@ -1,5 +1,14 @@
 bindable = require "bindable"
 
+
+_getFullTitle = (test) ->
+  buffer = []
+  p = test
+  while p
+    buffer.unshift p.title
+    p = p.parent
+  buffer.join(" ")
+
 module.exports = (models) ->
   (runner) ->
     current = undefined
@@ -22,8 +31,9 @@ module.exports = (models) ->
 
 
     runner.on "test", (test) ->
+      console.log test
       current = models.addLog {
-        description: test.title,
+        description: _getFullTitle(test),
         type: "test",
         state: test.state,
         pending: true,
