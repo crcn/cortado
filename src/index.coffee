@@ -47,6 +47,8 @@ saveBundledScripts = (clients, options) ->
   fs.writeFileSync tmpScript, buffer.join("\n;")
 
 
+  console.log "waiting for tests..."
+
   clients.send { event: "reload" }
 
   tmpScript
@@ -66,7 +68,7 @@ watchTests = (clients) ->
   clients.on "test", (data) ->
     if data.error
       console.error("✘", data.description)
-      console.error(data.error.message)
+      console.error("  ", data.error.message)
     else
       console.log("✔", data.description)
 
@@ -88,7 +90,8 @@ startServer = (options) ->
   app.use "/test", express.static __dirname + "/public"
   app.use "/test/js/app.bundle.js", browserify(__dirname + "/public/js/index.js")
     
-  sock = sockjs.createServer({sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"})
+  sock = sockjs.createServer({sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js", log: () -> })
+
   clients = new Clients(sock)
   sock.installHandlers(server, { prefix: "/sock" })
   app.use "/test/js/scripts.bundle.js", browserify(saveBundledScripts(clients, options))
