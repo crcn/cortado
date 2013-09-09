@@ -73,7 +73,7 @@ module.exports = (models) ->
         ), 5
 
       ), { 
-        timeout: 1000 * 60, 
+        timeout: 1000 * 30, 
         retry: true, 
         retryTimeout: 500 
       }
