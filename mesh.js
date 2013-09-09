@@ -17,7 +17,7 @@ module.exports = function(mesh, next) {
   var processStylusTimeout,
   processStylusContent = [],
   brokenFiles = {},
-  processStylusOutput = __dirname + "/lib/public/css/app.less",
+  processStylusOutput = __dirname + "/lib/plugins/http.public/css/app.less",
   osxNotifierPort = 18449,
   runningNotifier = false,
   buildNum = String(Date.now())

@@ -37,7 +37,8 @@
     "hurryup": "0.0.2",
     "xpgen": "0.0.3",
     "gaze": "~0.4.1",
-    "sockjs": "~0.3.7"
+    "sockjs": "~0.3.7",
+    "plugin": "~0.3.2"
   },
   "devDependencies": {
     "mesh": "~0.2.5",
