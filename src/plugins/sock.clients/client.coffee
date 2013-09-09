@@ -5,12 +5,19 @@ class Client extends require("events").EventEmitter
 
   constructor: (@_con) ->
     @_con.on "data", @_onMessage
+    @on "open", @_onOpen
 
   ###
   ###
 
   send: (data) ->
     @_con.write JSON.stringify data
+
+  ###
+  ###
+
+  _onOpen: (data) =>
+    @platform = data.platform
 
   ###
   ###

@@ -13,7 +13,11 @@ class RemoteClient extends require("events").EventEmitter
 
   ready: (cb) ->
     return cb() if @_ready
-    @once "open", cb
+    called = false
+    @once "open", () ->
+      return if called
+      called = true
+      cb()
 
   ###
   ###
@@ -33,6 +37,7 @@ class RemoteClient extends require("events").EventEmitter
 
   _onOpen: () =>
     @_ready = true
-    @emit "open"
+    @emit "open", { platform: platform }
+    @send { event: "open", data: { platform: platform } }
 
 module.exports = RemoteClient

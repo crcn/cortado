@@ -1,4 +1,11 @@
 <div>
-  <iframe class="test-preview" src="{{location}}" data-bind="{{ onLoad: _onIFrameLoad() }}">
-  </iframe>
+  <!--iframe class="test-preview" src="{{location}}" data-bind="{{ onLoad: _onIFrameLoad() }}"></iframe-->
+
+  {{ 
+    iframe: {
+      class: "test-preview",
+      src: location,
+      onLoad: _onIFrameLoad
+    }
+  }}
 </div>

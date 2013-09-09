@@ -36,13 +36,27 @@
   border-radius: 5px;
   background-clip: padding-box;
   position: relative;
-  left: -256px;
-  top: -192px;
-  -webkit-transform: scale(0.5);
-  -moz-transform: scale(0.5);
-  -o-transform: scale(0.5);
-  -ms-transform: scale(0.5);
-  transform: scale(0.5);
+}
+.main-container {
+  padding: 20px;
+  width: 100%;
+}
+.main-test-details {
+  width: 100%;
+  float: left;
+}
+.main-right-col {
+  position: fixed;
+  right: 20px;
+  text-align: right;
+  float: right;
+}
+.main-test-info {
+  padding-bottom: 10px;
+}
+.main-preview {
+  width: 800px;
+  height: 600px;
 }
 .log-verbose {
   font-size: 12px;
@@ -57,4 +71,16 @@
   font-size: 12px;
   color: red;
   padding-left: 10px;
+}
+.test-preview {
+  width: 800px;
+  height: 600px;
+  border: 3px solid #444;
+  -webkit-border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -moz-background-clip: padding;
+  border-radius: 5px;
+  background-clip: padding-box;
+  position: relative;
 }

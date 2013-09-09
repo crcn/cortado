@@ -68,7 +68,7 @@ module.exports = (models) ->
         unless $els.length
           return next(new Error("no elements found for path #{path}"))
 
-        return setTimeout (() ->
+        return setTimeout(() ->
           next(null, $els)
         ), 5
 

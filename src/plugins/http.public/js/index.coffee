@@ -1,3 +1,4 @@
+require("./views/components")
 MainView = require "./views/main"
 models   = require "./models"
 RemoteClient = require "./client"
