@@ -15,7 +15,21 @@ commander.
 command("start").
 description("run cortado server").
 action(function() {
-  cortado.start(_.extend(require(path.resolve(process.cwd(), commander.config)), {
+
+  var cfgs = [
+    commander.config,
+    process.env.HOME + "/.cortado.js"
+  ], cfg = {};
+
+  for(var i = cfgs.length; i--;) {
+    try {
+      cfg = _.extend(cfg, require(path.resolve(process.cwd(), cfgs[i])))
+    } catch(e) {
+
+    }
+  }
+
+  cortado.start(_.extend(cfg, {
     full: commander.full
   }))
 });

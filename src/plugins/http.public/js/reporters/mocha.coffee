@@ -15,6 +15,7 @@ module.exports = (models, client) ->
     successCount = 0
     failureCount = 0
     duration     = 0
+    errors       = []
 
 
     durInterval = setInterval (() ->
@@ -27,9 +28,12 @@ module.exports = (models, client) ->
       clearTimeout durInterval
       client.send { 
         event: "endTests", 
-        successCount: successCount, 
-        failureCount: failureCount,
-        duration: duration
+        data: {
+          errors: errors,
+          successCount: successCount, 
+          failureCount: failureCount,
+          duration: duration
+        }
       }
 
     runner.on "test", (test) ->
@@ -62,11 +66,14 @@ module.exports = (models, client) ->
         err = {
           message: test.error.message
         }
+        errors.push err
 
       client.send { 
         event: "test", 
-        description: current.get("description"),
-        error: err
+        data: {
+          description: current.get("description"),
+          error: err
+        }
       }
 
       models.set {

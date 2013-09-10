@@ -3,11 +3,8 @@ exports.plugin = (clients, tests) ->
   
   # define the controls
   controls = 
-    reload: () -> clients.emit "reload"
+    reload: () -> clients.send { event: "reload" }
 
-
-  # add some default hooks
-  tests.on "bundle", controls.reload
 
   controls
 

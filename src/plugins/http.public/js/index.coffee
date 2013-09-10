@@ -11,6 +11,10 @@ window.client  = new RemoteClient()
 client.on "reload", () -> 
   window.location.reload()
 
+
+client.on "runTests", () ->
+  mocha.run()
+
 $(document).ready () -> 
   main = new MainView()
   main.attach $ "#application"

@@ -19,15 +19,8 @@ class Clients extends require("events").EventEmitter
   ###
   ###
 
-  emit: (event, data = {}) ->
-    data.event = event
-    @send data
-
-  ###
-  ###
-
   _conConnection: (con) =>
-    @_clients.push client = new Client con
+    @_clients.push client = new Client con, @
     client.on "event", @_onEvent
 
   ###
