@@ -1,24 +1,33 @@
 async = require "async"
 Tester = require "./tester"
 
-exports.require = ["browser.launchers.*", "sock.clients", "tests", "config"]
-exports.plugin = (launcher, clients, tests, config) ->
+exports.require = ["browser.launchers.*", "sock.clients", "tests", "config", "pubsub"]
+exports.plugin = (launcher, clients, tests, config, pubsub) ->
   browsers = config.get("browsers") or []
   limit    = config.get("limit") or 1
 
+  running = false
   tester =
-    run: (next) ->
+    run: () ->
+      return if running
+      running = true
       async.eachLimit browsers, limit, ((browser, next) ->
-        new Tester(launcher, browser, clients).run next
+        tester = new Tester(launcher, browser, clients, pubsub).run next
+        tester.on "error", (data) ->
+          pubsub.publish "error", data
       ), (err) ->
+
+        running = false
+        hasError = false
 
         if err?
           console.error err.message
-          process.exit(1)
+          hasError = true
+        else
+          console.log "completed tests without errors"
 
         unless config.get("keepAlive")
-          console.log "completed tests without errors"
-          process.exit()
+          process.exit(Number(hasError))
 
   tests.on "bundle", tester.run
   tester

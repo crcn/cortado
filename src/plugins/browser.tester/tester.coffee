@@ -1,4 +1,6 @@
-class Tester
+EventEmitter = require("events").EventEmitter
+
+class Tester extends EventEmitter
   
   ###
   ###
@@ -10,7 +12,7 @@ class Tester
   ###
 
   run: (next) ->
-    console.log "opening %s", @browser
+    console.log "(%s) opening", @browser
     @_launcher.start @browser, "http://student.classdojo.dev:8083/test", (err, browser) =>
       
       return next(err) if err?
@@ -27,16 +29,24 @@ class Tester
         @clients.removeListener "open", listener
 
         client.send { event: "runTests" }
+
+
         client.on "test", (data) =>
+          inf = "#{@browser} - #{data.description}"
           if data.error
-            console.error("(%s) ✘", @browser, data.description)
+            console.error("(%s) ✘ %s", @browser, data.description)
+            @emit "error", new Error inf
             console.error("(%s)  ", @browser, data.error.message)
           else
-            console.log("(%s) ✔", @browser, data.description)
+            console.log("(%s) ✔ %s", @browser, data.description)
+            @emit "success", { message: inf }
+
 
         client.once "endTests", (result) =>
           console.log "(%s) success: %d, errors: %d, duration: %s ", @browser, result.successCount, result.failureCount, result.duration + " s"
-          next()
+          errors = result.errors?.map((err) -> err.message).join("\n")
+          next(if errors then new Error(errors) else undefined)
+    @
 
 
 

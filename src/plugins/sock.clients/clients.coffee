@@ -22,6 +22,10 @@ class Clients extends require("events").EventEmitter
   _conConnection: (con) =>
     @_clients.push client = new Client con, @
     client.on "event", @_onEvent
+    con.once "close", () =>
+      i = @_clients.indexOf(client)
+      if ~i
+        @_clients.splice i, 1
 
   ###
   ###
