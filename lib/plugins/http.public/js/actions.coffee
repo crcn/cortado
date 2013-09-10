@@ -36,33 +36,26 @@ fastener.add("actions", {
   wait:
     type: "actions"
     call: (fn, next) ->
-
-
-      hurryup(((next) ->
-        try 
-          fn()
-        catch e
-          return next e
-        next()
-
-      ), { retry: true, timeout: 1000 * 5, retryTimeout: 500 }).call @, (err) =>
+      hurryup(fn, { retry: true, timeout: 1000 * 5, retryTimeout: 500 }).call @, (err) =>
         return next(err) if err?
         next null, @
 
   find: 
     type: "actions"
     call: (path, fn, next) -> 
-      @findElements path, (err, $elements) =>
-        return next(err) if err?
-        try 
-          fn($elements)
-        catch e
-          next e, @
+    @findElements path, (err, $elements) =>
+      return next(err) if err?
+      try 
+        fn($elements)
+      catch e
+        next e, @
 
-        next null, @
+      next null, @
 
 
 })
+
+console.log "DD"
 
 module.exports = (models) ->
   
