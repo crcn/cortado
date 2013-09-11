@@ -1,6 +1,6 @@
 {
   "name": "cortado",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "cortado =======",
   "main": "./lib/index.js",
   "bin": {
@@ -40,7 +40,8 @@
     "sockjs": "~0.3.7",
     "plugin": "~0.3.2",
     "node-osx-notifier": "~0.1.0",
-    "request": "~2.27.0"
+    "request": "~2.27.0",
+    "beanpoll": "~0.2.19"
   },
   "devDependencies": {
     "mesh": "~0.2.5",
