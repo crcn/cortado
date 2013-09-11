@@ -34,6 +34,7 @@ class Tests extends events.EventEmitter
 
     @emit "bundle", { path: tmpScript }
 
+
     tmpScript
 
 
