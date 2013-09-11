@@ -6,3 +6,5 @@ exports.plugin = (config, tests) ->
   console.log "watching %s", watch
   gaze watch, () ->
     this.on "all", tests.bundle
+
+  
