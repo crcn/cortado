@@ -48,7 +48,7 @@ module.exports = {
 Next, you can start writing tests using mocha. Here's an example test from `[project_path]/tests/login-test.js`:
 
 
-```
+```javascript
 var assert = require("./helpers/assert"),
 xpaths     = require("./helpers/xpaths"),
 config     = require("./helpers/config"),
