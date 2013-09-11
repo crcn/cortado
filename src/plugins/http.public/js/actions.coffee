@@ -37,7 +37,6 @@ fastener.add("actions", {
     type: "actions"
     call: (fn, next) ->
 
-
       hurryup(((next) ->
         try 
           fn()
@@ -88,7 +87,7 @@ module.exports = (models) ->
         ), 5
 
       ), { 
-        timeout: 1000 * 30, 
+        timeout: 1000 * 5, 
         retry: true, 
         retryTimeout: 500 
       }
