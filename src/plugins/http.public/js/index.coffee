@@ -37,6 +37,7 @@ q = Url.parse(window.location.href, true).query ? {}
 
 if q.run?
   client.ready () ->
+    console.log "RED"
     mocha.run()
 
 
