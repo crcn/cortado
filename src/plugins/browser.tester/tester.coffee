@@ -25,25 +25,12 @@ class Tester extends EventEmitter
         client  = event.client
 
         return if name isnt @browserName or version isnt @browserVersion
-        console.log "(%s) running tests", @browser
+        
         @clients.removeListener "open", listener
 
         client.send { event: "runTests" }
 
-
-        client.on "test", (data) =>
-          inf = "#{@browser} - #{data.description}"
-          if data.error
-            console.error("(%s) ✘ %s", @browser, data.description)
-            @emit "failure", new Error inf
-            console.error("(%s)  ", @browser, data.error.message)
-          else
-            console.log("(%s) ✔ %s", @browser, data.description)
-            @emit "success", { message: inf }
-
-
         client.once "endTests", (result) =>
-          console.log "(%s) success: %d, errors: %d, duration: %s ", @browser, result.successCount, result.failureCount, result.duration + " s"
           errors = result.errors?.map((err) -> err.message).join("\n")
           next(if errors then new Error(errors) else undefined)
     @

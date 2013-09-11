@@ -24,9 +24,9 @@ exports.plugin = (config, pubsub) ->
 
 
   pubsub.subscribe "error", (err) ->
-    notifier.notify { type: "error", message: err.message }
+    notifier.notify { type: "fail", message: err.message }
 
   pubsub.subscribe "success", (data) ->
-    notifier.notify { type: "success", message: data.message }
+    notifier.notify { type: "pass", message: data.message }
 
   notifier

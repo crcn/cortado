@@ -18,6 +18,7 @@ class Client extends require("events").EventEmitter
 
   _onOpen: (data) =>
     @platform = data.platform
+    @send  { event: "ready" }
 
   ###
   ###

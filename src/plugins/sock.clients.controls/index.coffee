@@ -6,23 +6,31 @@ exports.plugin = (clients, tests, pubsub) ->
     reload: () -> 
       clients.send { event: "reload" }
 
-  platform = (event) ->
-    return "Browser" unless event.client.platform
-    p = event.client.platform
-    "#{p.name}@#{p.version.split('.').shift()}"
 
 
-  clients.on "fail", (event) ->
-    p = platform event
-    pubsub.publish "error", { message: "#{p} - #{event.data.message}"}
+  clients.on "client", (client) ->
 
-  clients.on "startTests", (event) ->
-    p = platform event
-    pubsub.publish "notify", { type: "info", message: "#{p} - tests start"}
+    browser = "Browser"
 
-  clients.on "endTests", (event) ->
-    p = platform event
-    pubsub.publish "notify", { type: "info", message: "#{p} - tests complete"}
+    client.on "open", () ->
+      browser = "#{client.platform.name}@#{client.platform.version.split('.').shift()}"
+
+    client.on "startTests", (event) ->
+      pubsub.publish "notify", { type: "info", message: "#{browser} - tests start"}
+
+    client.on "test", (data) =>
+      inf = "#{browser} - #{data.description}"
+      if data.error
+        console.error("(%s) ✘ %s", browser, data.description)
+        pubsub.publish "error", new Error inf
+        console.error("(%s)  ", browser, data.error.message)
+      else
+        console.log("(%s) ✔ %s", browser, data.description)
+        @emit "success", { message: inf }
+
+    client.on "endTests", (result) ->
+      inf = "#{browser} - success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
+      pubsub.publish "notify", { type: "info", message: inf }
 
   tests.on "bundle", controls.reload
 

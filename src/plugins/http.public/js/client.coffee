@@ -7,6 +7,8 @@ class RemoteClient extends require("events").EventEmitter
     @_socket = new SockJS("/sock")
     @_socket.onmessage = @_onMessage
     @_socket.onopen = @_onOpen
+    @once "ready", () =>
+      @_ready = true
 
   ###
   ###
@@ -14,7 +16,7 @@ class RemoteClient extends require("events").EventEmitter
   ready: (cb) ->
     return cb() if @_ready
     called = false
-    @once "open", () ->
+    @once "ready", () ->
       return if called
       called = true
       cb()
@@ -36,7 +38,6 @@ class RemoteClient extends require("events").EventEmitter
   ###
 
   _onOpen: () =>
-    @_ready = true
     @emit "open", { platform: platform }
     @send { event: "open", data: { platform: platform } }
 
