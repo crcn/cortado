@@ -13,6 +13,7 @@ class Preview extends require("mojojs").View
     "models.control.location": "location"
     "location": (v) ->
       @set "models.control.document", undefined
+      
   ###
   ###
 
