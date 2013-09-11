@@ -44,7 +44,8 @@
     "beanpoll": "0.2.x",
     "browserify-middleware": "1.17.x",
     "paperclip-component": "0.0.x",
-    "eyebrowse": "0.0.x"
+    "eyebrowse": "0.0.x",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "mesh": "~0.2.5",
