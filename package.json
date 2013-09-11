@@ -41,7 +41,10 @@
     "plugin": "~0.3.2",
     "node-osx-notifier": "~0.1.0",
     "request": "~2.27.0",
-    "beanpoll": "~0.2.19"
+    "beanpoll": "~0.2.19",
+    "browserify-middleware": "1.17.x",
+    "paperclip-component": "0.0.x",
+    "eyebrowse": "0.0.x"
   },
   "devDependencies": {
     "mesh": "~0.2.5",
