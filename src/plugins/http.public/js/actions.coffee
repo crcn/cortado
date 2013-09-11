@@ -57,7 +57,7 @@ fastener.add("actions", {
 
         run next
 
-      ), { retry: true, timeout: 1000 * 5, retryTimeout: 500 }).call @, (err) =>
+      ), { retry: true, timeout: 1000 * 5, retryTimeout: 100 }).call @, (err) =>
         return next(err) if err?
         next null, @
 
