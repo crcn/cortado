@@ -4,6 +4,7 @@ hurryup  = require "hurryup"
 
 trigger = (els, event) ->
   for el in els
+    el.dispatchEvent new Event event
 
 fastener.add("actions", {
 
@@ -26,6 +27,7 @@ fastener.add("actions", {
         $elements.trigger "keyup"
         $elements.trigger "change"
         $elements.trigger "click"
+
         next null, @
 
   click:
@@ -33,10 +35,11 @@ fastener.add("actions", {
     call: (path, next) ->
       @findElements path, (err, $elements) =>
         return next(err) if err?
+        $elements.load () ->
         $elements.trigger "mousedown"
         $elements.trigger "mouseup"
         $elements.trigger "click"
-        console.log "click", $elements
+
         next null, @
 
   wait:
@@ -89,6 +92,7 @@ module.exports = (models) ->
 
         try 
           $els = $(cdoc).xpath(path)
+          for el in $els
         catch e
           return next new Error("xpath #{path} is invalid")
 
@@ -116,6 +120,9 @@ module.exports = (models) ->
 
   models.bind "control.document", (doc) -> 
     fastener.document = doc
+
+  models.bind "control.window", (win) ->
+    fastener.window = win
 
   fastener.on "error", () ->
     models.addLog { description: "fail", success: false }

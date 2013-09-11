@@ -1,3 +1,8 @@
+if window.top isnt window and ~window.location.href.indexOf(window.top.location.href)
+  console.error "cannot run a test window in test window"
+  return
+
+
 require("./views/components")
 MainView = require "./views/main"
 models   = require "./models"

@@ -35,10 +35,8 @@ fastener.add("actions", {
     call: (path, next) ->
       @findElements path, (err, $elements) =>
         return next(err) if err?
-        $elements.load () ->
-        $elements.trigger "mousedown"
-        $elements.trigger "mouseup"
-        $elements.trigger "click"
+        $elements.click()
+
         next null, @
 
   wait:
@@ -90,7 +88,7 @@ module.exports = (models) ->
           return next(new Error("control document is not defined"))
 
         try 
-          $els = $(cdoc).xpath(path)
+          $els = models.get("control.window").$ $(cdoc).xpath(path)
         catch e
           return next new Error("xpath #{path} is invalid")
 
@@ -118,6 +116,9 @@ module.exports = (models) ->
 
   models.bind "control.document", (doc) -> 
     fastener.document = doc
+
+  models.bind "control.window", (win) ->
+    fastener.window = win
 
   fastener.on "error", () ->
     models.addLog { description: "fail", success: false }
