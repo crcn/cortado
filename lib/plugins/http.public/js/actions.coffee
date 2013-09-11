@@ -39,17 +39,15 @@ fastener.add("actions", {
 
       hurryup(((next) ->
 
-        run = (next) ->
-          try 
-            if fn.length is 1
-              fn next
-            else
-              fn()
-              next()
-          catch err
-            next err
+        run = (err) ->
+          if fn.length is 1
 
-        run next
+
+        try 
+          fn()
+        catch e
+          return next e
+        next()
 
       ), { retry: true, timeout: 1000 * 5, retryTimeout: 500 }).call @, (err) =>
         return next(err) if err?

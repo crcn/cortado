@@ -1,9 +1,9 @@
 
-<a href="#" data-bind="{{ onClick: showPreview = !showPreview }}">
+<!--a href="#" data-bind="{{ onClick: showPreview = !showPreview }}">
   {{ showPreview ? "hide preview" : "show preview" }}
-</a>
+</a-->
 
-<div data-bind="{{ show: showPreview }}">
+<div data-bind="{{ show: true }}">
   <!--iframe class="test-preview" src="{{location}}" data-bind="{{ onLoad: _onIFrameLoad() }}"></iframe-->
 
   {{ 
