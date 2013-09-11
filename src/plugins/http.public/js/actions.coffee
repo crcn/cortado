@@ -2,6 +2,10 @@ fasten   = require "fasten"
 fastener = fasten()
 hurryup  = require "hurryup"
 
+trigger = (els, event) ->
+  for el in els
+    el.dispatchEvent new Event event
+
 fastener.add("actions", {
 
   visit: 
@@ -23,6 +27,7 @@ fastener.add("actions", {
         $elements.trigger "keyup"
         $elements.trigger "change"
         $elements.trigger "click"
+
         next null, @
 
   click:
@@ -30,6 +35,9 @@ fastener.add("actions", {
     call: (path, next) ->
       @findElements path, (err, $elements) =>
         return next(err) if err?
+        $elements.load () ->
+        $elements.trigger "mousedown"
+        $elements.trigger "mouseup"
         $elements.trigger "click"
         next null, @
 

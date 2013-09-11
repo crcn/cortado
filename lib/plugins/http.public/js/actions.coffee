@@ -2,6 +2,9 @@ fasten   = require "fasten"
 fastener = fasten()
 hurryup  = require "hurryup"
 
+trigger = (els, event) ->
+  for el in els
+
 fastener.add("actions", {
 
   visit: 
@@ -30,7 +33,10 @@ fastener.add("actions", {
     call: (path, next) ->
       @findElements path, (err, $elements) =>
         return next(err) if err?
+        $elements.trigger "mousedown"
+        $elements.trigger "mouseup"
         $elements.trigger "click"
+        console.log "click", $elements
         next null, @
 
   wait:
@@ -39,15 +45,17 @@ fastener.add("actions", {
 
       hurryup(((next) ->
 
-        run = (err) ->
-          if fn.length is 1
+        run = (next) ->
+          try 
+            if fn.length is 1
+              fn next
+            else
+              fn()
+              next()
+          catch err
+            next err
 
-
-        try 
-          fn()
-        catch e
-          return next e
-        next()
+        run next
 
       ), { retry: true, timeout: 1000 * 5, retryTimeout: 500 }).call @, (err) =>
         return next(err) if err?

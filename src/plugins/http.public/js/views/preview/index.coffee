@@ -19,9 +19,14 @@ class Preview extends require("mojojs").View
   _onIFrameLoad: () =>
 
     try 
-      doc = @$("iframe").contents()[0]
+      $iframe = @$("iframe")
+      iframe = $iframe[0]
+      doc = $iframe.contents()[0]
+      win = iframe.contentWindow or iframe
+      
       return if doc is document
       @set "models.control.document", doc
+      @set "models.control.window", win
     catch e
       console.warn e
       @set "models.control.document", document
