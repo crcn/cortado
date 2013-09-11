@@ -35,7 +35,7 @@ class Tester extends EventEmitter
           inf = "#{@browser} - #{data.description}"
           if data.error
             console.error("(%s) ✘ %s", @browser, data.description)
-            @emit "error", new Error inf
+            @emit "failure", new Error inf
             console.error("(%s)  ", @browser, data.error.message)
           else
             console.log("(%s) ✔ %s", @browser, data.description)

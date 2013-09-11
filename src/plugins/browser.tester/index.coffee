@@ -6,6 +6,8 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
   browsers = config.get("browsers") or []
   limit    = config.get("limit") or 1
 
+  return unless browsers.length
+
   running = false
   tester =
     run: () ->
@@ -13,8 +15,6 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
       running = true
       async.eachLimit browsers, limit, ((browser, next) ->
         tester = new Tester(launcher, browser, clients, pubsub).run next
-        tester.on "error", (data) ->
-          pubsub.publish "error", data
       ), (err) ->
 
         running = false

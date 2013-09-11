@@ -2,6 +2,7 @@ require("./views/components")
 MainView = require "./views/main"
 models   = require "./models"
 RemoteClient = require "./client"
+Url          = require "url"
 
 window.actions = actions = require("./actions")(models)
 window.xpath   = require("xpgen")()
@@ -26,5 +27,11 @@ mocha.setup({
   timeout: 1000 * 9999
 })
 
+
+q = Url.parse(window.location.href, true).query ? {}
+
+if q.run?
+  client.ready () ->
+    mocha.run()
 
 

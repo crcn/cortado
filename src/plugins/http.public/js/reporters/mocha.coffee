@@ -87,5 +87,10 @@ module.exports = (models, client) ->
           type: "error"
         }
 
+        client.send {
+          event: "fail",
+          data: err
+        }
+
 
       

@@ -14,15 +14,19 @@ exports.plugin = (config, pubsub) ->
 
   notifier = 
     notify: (data) ->
-      path = if data.success then "success" else "fail"
+      path = data.type
       req = request.get("http://localhost:#{port}/#{path}?message=#{encodeURIComponent(String(data.message))}&title=Cortado")
       req.on "error", () ->
 
 
+  pubsub.subscribe "notify", (data) ->
+    notifier.notify data
+
+
   pubsub.subscribe "error", (err) ->
-    notifier.notify { success: false, message: err.message }
+    notifier.notify { type: "error", message: err.message }
 
   pubsub.subscribe "success", (data) ->
-    notifier.notify { success: true, message: data.message }
+    notifier.notify { type: "success", message: data.message }
 
   notifier
