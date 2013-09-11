@@ -26,8 +26,6 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
         else
           console.log "completed tests without errors"
 
-        unless config.get("keepAlive")
-          process.exit(Number(hasError))
 
   tests.on "bundle", tester.run
   tester
