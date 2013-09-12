@@ -1,6 +1,6 @@
 {
   "name": "cortado",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "cortado =======",
   "main": "./lib/index.js",
   "bin": {
