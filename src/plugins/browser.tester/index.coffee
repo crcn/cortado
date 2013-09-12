@@ -21,14 +21,12 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
         hasError = false
 
         if err?
-          console.error err.message
           hasError = true
         else
           console.log "completed tests without errors"
 
 
-  tests.on "bundle", tester.run
-  tester
+  pubsub.subscribe "init", tester.run
 
 
 

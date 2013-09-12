@@ -1,6 +1,7 @@
-if window.top isnt window and ~window.location.href.indexOf(window.top.location.href)
-  console.error "cannot run a test window in test window"
-  return
+# busts with IE
+#if window.top isnt window and ~window.location.href.indexOf(window.top.location.href)
+#  console.error "cannot run a test window in test window"
+#  return
 
 
 require("./views/components")
@@ -35,9 +36,9 @@ mocha.setup({
 
 q = Url.parse(window.location.href, true).query ? {}
 
-if q.run?
-  client.ready () ->
-    console.log "RED"
-    mocha.run()
+# q.run?
+
+client.ready () ->
+  mocha.run()
 
 

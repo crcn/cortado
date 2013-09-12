@@ -12,7 +12,6 @@ class Tester extends EventEmitter
   ###
 
   run: (next) ->
-    console.log "(%s) opening", @browser
     @_launcher.start @browser, "http://student.classdojo.dev:8083/test", (err, browser) =>
       
       return next(err) if err?
@@ -32,7 +31,8 @@ class Tester extends EventEmitter
 
         client.once "endTests", (result) =>
           errors = result.errors?.map((err) -> err.message).join("\n")
-          next(if errors then new Error(errors) else undefined)
+          browser.stop() #kill the browser after completion
+          next()
     @
 
 
