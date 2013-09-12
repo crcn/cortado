@@ -36,18 +36,13 @@ module.exports = (models, client) ->
         }
       }
 
-    runner.on "test", (test) ->
-      current = models.addLog {
-        description: _getFullTitle(test),
-        type: "test",
-        state: test.state,
-        pending: true,
-      }
-
     runner.on "fail", (test, err) ->
       test.error = err
+      if test.type is "hook" or error.uncaught
+        runner.emit "test end", test
 
     runner.on "test end", (test) ->
+
 
       if test.error
         failureCount++
@@ -55,11 +50,14 @@ module.exports = (models, client) ->
         successCount++
 
       skipped = test.pending is true
-      current.set {
-        time: if skipped then 0 else test.duration,
+
+      models.addLog {
+        description: desc = _getFullTitle(test),
+        type: "test",
+        state: test.state,
         pending: false,
         success: test.state is "passed",
-        state: test.state
+        time: if skipped then 0 else test.duration,
       }
 
       if test.error 
@@ -71,7 +69,7 @@ module.exports = (models, client) ->
       client.send { 
         event: "test", 
         data: {
-          description: current.get("description"),
+          description: desc,
           error: err
         }
       }
@@ -91,6 +89,3 @@ module.exports = (models, client) ->
           event: "fail",
           data: err
         }
-
-
-      
