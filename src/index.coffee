@@ -1,4 +1,5 @@
 plugin = require "plugin"
+require "colors"
 
 exports.start = (options) ->
   plug = plugin().

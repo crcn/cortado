@@ -22,11 +22,11 @@ exports.plugin = (clients, tests, pubsub) ->
     client.on "test", (data) =>
       inf = "#{browser} - #{data.description}"
       if data.error
-        console.error("(%s) ✘ %s", browser, data.description)
+        console.error("(%s) %s %s", browser, "✘".red, data.description)
         pubsub.publish "error", new Error inf
         console.error("(%s)  ", browser, data.error.message)
       else
-        console.log("(%s) ✔ %s", browser, data.description)
+        console.log("(%s) %s %s", browser, "✔".green, data.description)
         @emit "success", { message: inf }
 
     client.on "endTests", (result) ->
