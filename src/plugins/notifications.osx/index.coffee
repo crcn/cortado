@@ -7,6 +7,7 @@ exports.plugin = (config, pubsub) ->
 
   startNotifier = () ->
     proc = spawn(__dirname + "/../../../node_modules/.bin/node-osx-notifier", [port])
+    proc.on "error", () ->
     proc.on "exit", () ->
       setTimeout startNotifier, 1000 * 5
 
