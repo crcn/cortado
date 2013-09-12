@@ -6,6 +6,8 @@ class Client extends require("events").EventEmitter
   constructor: (@_con, @_clients) ->
     @_con.on "data", @_onMessage
     @on "open", @_onOpen
+    @_con.on "close", @_onClose
+    @name = "Browser"
 
   ###
   ###
@@ -18,7 +20,21 @@ class Client extends require("events").EventEmitter
 
   _onOpen: (data) =>
     @platform = data.platform
+    @name = @platform.name + "@" + @platform.version.split(".").shift()
     @send  { event: "ready" }
+
+  ###
+  ###
+
+  _onClose: () =>
+    @emit "close"
+
+
+  ###
+  ###
+
+  toString: () ->
+    @name
 
   ###
   ###

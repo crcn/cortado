@@ -18,13 +18,23 @@ exports.plugin = (clients, config) ->
     ), 100
 
 
+  tryKilling = () ->
+    if not --numRunning and not keepAlive
+      killProcess()
+
+
   clients.on "client", (client) ->
     client.on "startTests", () ->
       numRunning++
 
-    client.on "endTests", (info) ->
-      hasErrors = hasErrors or info.failureCount > 0
 
-      if not --numRunning and not keepAlive
-        killProcess()
+    client.on "close", onClose = () ->  
+      hasErrors = true
+      console.error "(%s) closed unexpectedly", client
+      tryKilling()
+
+    client.on "endTests", (info) ->
+      client.removeListener "close", onClose
+      hasErrors = hasErrors or info.failureCount > 0
+      tryKilling()
 

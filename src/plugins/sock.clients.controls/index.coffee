@@ -17,7 +17,7 @@ exports.plugin = (clients, tests, pubsub) ->
 
     client.on "startTests", (event) ->
       pubsub.publish "notify", { type: "info", message: "#{browser} - tests start"}
-      console.log "(%s)    start tests", browser
+      console.log "(%s)    starting tests", browser
 
     client.on "test", (data) =>
       inf = "#{browser} - #{data.description}"
@@ -31,7 +31,7 @@ exports.plugin = (clients, tests, pubsub) ->
 
     client.on "endTests", (result) ->
       inf = "#{browser} - success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
-      console.log "(%s)    %s", browser, "complete tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
+      console.log "(%s)    %s", browser, "completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
       pubsub.publish "notify", { type: "info", message: inf }
       pubsub.publish "completeTests"
 
