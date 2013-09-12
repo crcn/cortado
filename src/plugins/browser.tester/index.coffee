@@ -1,13 +1,16 @@
 async = require "async"
 Tester = require "./tester"
+Url    = require "url"
 
 exports.require = ["browser.launchers.*", "sock.clients", "tests", "config", "pubsub"]
 exports.plugin = (launcher, clients, tests, config, pubsub) ->
   browsers = config.get("browsers") or []
   limit    = config.get("limit") or 1
 
+  proxyInfo = Url.parse(config.get("proxy"))
+
   ops = {
-    host: config.get("host") ? "localhost",
+    host: config.get("host") ? proxyInfo.hostname ? "localhost",
     port: config.get("port")
   }
 
