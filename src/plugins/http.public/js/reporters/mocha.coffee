@@ -36,6 +36,12 @@ module.exports = (models, client) ->
         }
       }
 
+      models.addLog {
+        description: "All tests complete",
+        type: "test",
+        success: true
+      }
+
     runner.on "fail", (test, err) ->
       test.error = err
       if test.type is "hook" or err?.uncaught
