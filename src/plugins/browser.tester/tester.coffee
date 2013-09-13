@@ -29,8 +29,6 @@ class Tester extends EventEmitter
         
         @clients.removeListener "open", listener
 
-        client.send { event: "runTests" }
-
         client.once "endTests", (result) =>
           errors = result.errors?.map((err) -> err.message).join("\n")
           browser.stop() #kill the browser after completion
