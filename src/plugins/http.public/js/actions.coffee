@@ -40,7 +40,8 @@ fastener.add("actions", {
 
         # simulate href click
         if href and (not /^http/.test(href) and /^[^\/]/.test(href))
-          href = "/" + href
+          href = actions.window.location.pathname + href
+
 
         if href
           actions.window.location = href
