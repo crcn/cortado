@@ -5,6 +5,8 @@
 
   <div class="main-right-col">
     {{html: sections.status }}
+
+    {{ models.selected.xpath }}
     <div class="main-preview">
       {{ html: sections.preview }}
     </div>

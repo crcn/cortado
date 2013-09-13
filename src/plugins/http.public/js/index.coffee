@@ -3,9 +3,9 @@
 #  console.error "cannot run a test window in test window"
 #  return
 
-if typeof console is "undefined"
-  window.console = console = {}
-  console.log = console.warn = console.error = () ->
+if typeof window.console is "undefined"
+  window.console = {}
+  window.console.log = window.console.warn = window.console.error = () ->
 
 
 require("./views/components")
@@ -13,6 +13,7 @@ MainView = require "./views/main"
 models   = require "./models"
 RemoteClient = require "./client"
 Url          = require "url"
+findXPath    = require "./utils/findXPath"
 
 window.actions = actions = require("./actions")(models)
 window.xpath   = require("xpgen")()
@@ -21,6 +22,15 @@ window.client  = new RemoteClient()
 
 client.on "reload", () -> 
   window.location.reload()
+
+onControlDocEvent = (event) ->
+  models.set "selected.xpath", String findXPath(event.target)
+
+# dev util that logs best xpath
+models.bind "control.document", (controlDoc, oldDoc) ->
+  
+  oldDoc?.removeEventListener? "mousedown", onControlDocEvent
+  controlDoc?.addEventListener? "mousedown", onControlDocEvent, true
 
 
 client.on "runTests", () ->
