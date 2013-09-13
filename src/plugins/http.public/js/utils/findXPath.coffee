@@ -38,7 +38,7 @@ _findRelativeXPath = (element, postfix) ->
   ]
 
 
-  for attr in ["class", "href", "name", "value", "placeholder", "alt"]
+  for attr in ["name", "placeholder", "class", "href", "value", "alt"]
     continue unless (a = $e.attr(attr))
     posibilities.push xpgen().element(nodeName).eq("@" + attr, a)
 
