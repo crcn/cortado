@@ -30,8 +30,6 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
 
         if err?
           hasError = true
-        else
-          console.log "completed tests without errors"
 
 
   pubsub.subscribe "init", tester.run
