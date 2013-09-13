@@ -6,7 +6,9 @@
   <div class="main-right-col">
     {{html: sections.status }}
 
-    {{ models.selected.xpath }}
+
+    {{html: sections.findXPath }}
+
     <div class="main-preview">
       {{ html: sections.preview }}
     </div>

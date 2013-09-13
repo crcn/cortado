@@ -9,5 +9,7 @@ class MainView extends require("mojojs").View
       type: require("./logroll")
     status:
       type: require("./status")
+    findXPath:
+      type: require("./findXPath")
 
 module.exports = MainView

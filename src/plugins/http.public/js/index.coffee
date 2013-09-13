@@ -23,14 +23,26 @@ window.client  = new RemoteClient()
 client.on "reload", () -> 
   window.location.reload()
 
+###
 onControlDocEvent = (event) ->
-  models.set "selected.xpath", String findXPath(event.target)
+  try 
+    event.preventDefault()
+    event.stopImmediatePropagation()
+    models.set "selected.xpath", String findXPath(event.target)
+  catch e
+    console.warn e.stack
 
-# dev util that logs best xpath
-models.bind "control.document", (controlDoc, oldDoc) ->
-  
-  oldDoc?.removeEventListener? "mousedown", onControlDocEvent
-  controlDoc?.addEventListener? "mousedown", onControlDocEvent, true
+$(document).bind "keydown", (event) ->
+  return unless event.altKey
+  doc = models.get("control.document")
+  doc?.addEventListener? "click", onControlDocEvent, true
+
+  $(document).one "keyup", (event) ->
+    console.log event.keyCode
+    return if event.keyCode isnt 18
+    doc?.removeEventListener? "click", onControlDocEvent
+
+###
 
 
 client.on "runTests", () ->

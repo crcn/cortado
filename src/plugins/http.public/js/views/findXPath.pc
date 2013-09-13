@@ -1,0 +1,14 @@
+<a 
+  href="#" 
+  data-bind="{{ onClick: toggleFindXPath() }}">
+
+  {{ findXPath ? "stop xpath inspector" : "start xpath inspector"  }}
+</a> <br />
+
+{{#if: findXPath }}
+  {{#if: bestXPath }}
+    Best XPath: <input type="input" disabled="disabled" size="{{bestXPath.length || 20}}" value="{{bestXPath}}"></input>
+  {{/else}}
+    <strong>Click anywhere in the IFrame to find the best XPath.</strong>
+  {{/}}
+{{/}}
