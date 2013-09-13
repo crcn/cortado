@@ -24,7 +24,7 @@ class FindBestXPathView extends require("mojojs").View
   toggleFindXPath: () ->
     @set "findXPath", not @get("findXPath")
     @set "bestXPath", undefined
-    @_cleanupListeners()
+    @_cleanup()
 
     return unless @get("findXPath")
 
@@ -34,12 +34,19 @@ class FindBestXPathView extends require("mojojs").View
         @_cdoc?.addEventListener event, @_onClickElement, true
     ).now()
 
+  ###
+  ###
+
+  _cleanup: () =>
+    @_docBinding?.dispose()
+    @_cleanupListeners()
+
+
 
   ###
   ###
 
   _cleanupListeners: () =>
-    @_docBinding?.dispose()
     for event in @events
       @_cdoc?.removeEventListener event, @_onClickElement, true
 

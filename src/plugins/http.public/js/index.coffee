@@ -23,28 +23,6 @@ window.client  = new RemoteClient()
 client.on "reload", () -> 
   window.location.reload()
 
-###
-onControlDocEvent = (event) ->
-  try 
-    event.preventDefault()
-    event.stopImmediatePropagation()
-    models.set "selected.xpath", String findXPath(event.target)
-  catch e
-    console.warn e.stack
-
-$(document).bind "keydown", (event) ->
-  return unless event.altKey
-  doc = models.get("control.document")
-  doc?.addEventListener? "click", onControlDocEvent, true
-
-  $(document).one "keyup", (event) ->
-    console.log event.keyCode
-    return if event.keyCode isnt 18
-    doc?.removeEventListener? "click", onControlDocEvent
-
-###
-
-
 client.on "runTests", () ->
   mocha.run()
 
