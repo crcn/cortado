@@ -7,12 +7,13 @@ class Tester extends EventEmitter
 
   constructor: (@_launcher, @browser, @clients, @_ops) ->
     [@browserName, @browserVersion] = @browser.split("@")
-    console.log @_ops
+
 
   ###
   ###
 
   run: (next) ->
+
     @_launcher.start @browser, "http://#{@_ops.host}:#{@_ops.port}/test", (err, browser) =>
       
       return next(err) if err?
