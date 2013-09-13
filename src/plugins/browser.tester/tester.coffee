@@ -7,6 +7,7 @@ class Tester extends EventEmitter
 
   constructor: (@_launcher, @browser, @clients, @_ops) ->
     [@browserName, @browserVersion] = @browser.split("@")
+    console.log @_ops
 
   ###
   ###

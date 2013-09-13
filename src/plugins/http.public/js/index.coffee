@@ -3,6 +3,10 @@
 #  console.error "cannot run a test window in test window"
 #  return
 
+if typeof console is "undefined"
+  window.console = console = {}
+  console.log = console.warn = console.error = () ->
+
 
 require("./views/components")
 MainView = require "./views/main"

@@ -22,7 +22,7 @@ exports.plugin = (launcher, clients, tests, config, pubsub) ->
       return if running
       running = true
       async.eachLimit browsers, limit, ((browser, next) ->
-        tester = new Tester(launcher, browser, clients, pubsub, ops).run next
+        tester = new Tester(launcher, browser, clients, ops).run next
       ), (err) ->
 
         running = false
