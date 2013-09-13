@@ -37,7 +37,7 @@ exports.plugin = (clients, tests, pubsub) ->
 
     client.on "endTests", (result) ->
       inf = "#{browser} - success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
-      console.log "%s    %s", browser, ("completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s").bold
+      console.log "%s    %s", browser, ("completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s")
       pubsub.publish "notify", { type: "info", message: inf }
       pubsub.publish "completeTests"
 
