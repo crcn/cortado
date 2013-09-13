@@ -30,14 +30,14 @@ exports.plugin = (clients, tests, pubsub) ->
       if data.error
         console.error("%s %s %s", browser, "✘".red, data.description)
         pubsub.publish "error", new Error inf
-        console.error("%s   ", browser, data.error.message)
+        console.error("%s   ", browser, String(data.error.message).red)
       else
         console.log("%s %s %s", browser, "✔".green, data.description)
         @emit "success", { message: inf }
 
     client.on "endTests", (result) ->
       inf = "#{browser} - success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
-      console.log "%s    %s", browser, "completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
+      console.log "%s    %s", browser, ("completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s").bold
       pubsub.publish "notify", { type: "info", message: inf }
       pubsub.publish "completeTests"
 
