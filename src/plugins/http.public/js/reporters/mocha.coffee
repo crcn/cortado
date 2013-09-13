@@ -38,7 +38,7 @@ module.exports = (models, client) ->
 
     runner.on "fail", (test, err) ->
       test.error = err
-      if test.type is "hook" or error.uncaught
+      if test.type is "hook" or err?.uncaught
         runner.emit "test end", test
 
     runner.on "test end", (test) ->
