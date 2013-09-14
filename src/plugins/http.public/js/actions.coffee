@@ -30,6 +30,23 @@ fastener.add("actions", {
 
         next null, @
 
+  enter: 
+    type: "actions"
+    call: (path, next) ->
+      @findElements path, (err, $elements) =>
+        return next(err) if err?
+        
+        for name in ["keyup", "keydown"]
+
+          e = actions.window.$.Event name
+          e.which = 13
+          e.keyCode = 13
+          $elements.trigger e
+
+        $elements.submit()
+
+        next null, @
+
   select:
     type: "actions"
     call: (path, index, next) ->
