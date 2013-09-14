@@ -30,6 +30,17 @@ fastener.add("actions", {
 
         next null, @
 
+  select:
+    type: "actions"
+    call: (path, index, next) ->
+      @findElements path, (err, $elements) =>
+        return next(err) if err?
+        $opt = $($elements.find("option")[index])
+        $elements.val($opt.val())
+        $elements.trigger("change")
+        $elements.trigger("mouseup")
+        next null, @
+
   click:
     type: "actions"
     call: (path, next) ->
