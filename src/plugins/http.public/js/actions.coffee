@@ -98,7 +98,7 @@ fastener.add("actions", {
 
         run next
 
-      ), { retry: true, timeout: timeout, retryTimeout: 500 }).call @, (err) =>
+      ), { retry: true, timeout: timeout, retryTimeout: 1000 }).call @, (err) =>
         return next(err) if err?
         next null, @
 
@@ -143,7 +143,7 @@ module.exports = (models) ->
       ), { 
         timeout: 1000 * 30, 
         retry: true, 
-        retryTimeout: 500 
+        retryTimeout: 1000 
       }
 
       fn.call @, path, next
