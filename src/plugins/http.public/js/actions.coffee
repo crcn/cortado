@@ -78,7 +78,11 @@ fastener.add("actions", {
 
   wait:
     type: "actions"
-    call: (fn, next) ->
+    call: (fn, timeout, next) ->
+
+      if arguments.length is 2
+        next = timeout
+        timeout = 1000 * 30
 
       hurryup(((next) ->
 
@@ -94,7 +98,7 @@ fastener.add("actions", {
 
         run next
 
-      ), { retry: true, timeout: 1000 * 5, retryTimeout: 100 }).call @, (err) =>
+      ), { retry: true, timeout: timeout, retryTimeout: 500 }).call @, (err) =>
         return next(err) if err?
         next null, @
 
@@ -137,7 +141,7 @@ module.exports = (models) ->
         ), 5
 
       ), { 
-        timeout: 1000 * 5, 
+        timeout: 1000 * 30, 
         retry: true, 
         retryTimeout: 500 
       }
