@@ -24,6 +24,9 @@ class Preview extends require("mojojs").View
       iframe = $iframe[0]
       doc = $iframe.contents()[0]
       win = iframe.contentWindow or iframe
+
+      if win.location.pathname is "/test"
+        return win.location = "/"
       
       return if doc is document
       @set "models.control.document", doc
