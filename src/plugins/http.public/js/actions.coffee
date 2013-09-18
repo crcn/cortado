@@ -63,13 +63,17 @@ fastener.add("actions", {
     call: (path, next) ->
       @findElements path, (err, $elements) =>
         return next(err) if err?
+
         $elements.click()
         href = $elements.attr("href")
+
+        # skip if the hash is the same, or the hash is simply #
+        if /^#/.test(href) and (actions.window.location.hash is href) or /^#$/.test(href)
+          return next null, @
 
         # simulate href click
         if href and (not /^http/.test(href) and /^[^\/]/.test(href))
           href = actions.window.location.pathname + href
-
 
         if href
           actions.window.location = href
