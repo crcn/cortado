@@ -4,6 +4,11 @@ class Preview extends require("mojojs").View
   ###
   ###
 
+  define: ["location"]
+  
+  ###
+  ###
+
   paper: require("./index.pc")
   
   ###

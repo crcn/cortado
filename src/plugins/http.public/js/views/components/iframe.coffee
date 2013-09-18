@@ -1,6 +1,11 @@
 hurryup = require "hurryup"
 
 class IFrame extends require("mojojs").View
+  
+  ###
+  ###
+
+  define: ["onLoad", "src", "class", "id"]
 
   ###
   ###

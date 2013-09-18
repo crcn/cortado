@@ -1,6 +1,11 @@
 findXPath = require "../utils/findXPath"
 
 class FindBestXPathView extends require("mojojs").View
+
+  ###
+  ###
+
+  define: ["findXPath"]
   
   ###
   ###
