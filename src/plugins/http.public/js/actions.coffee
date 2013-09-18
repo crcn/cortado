@@ -86,7 +86,7 @@ fastener.add("actions", {
 
       if arguments.length is 2
         next = timeout
-        timeout = 1000 * 10
+        timeout = 1000 * 30
 
       hurryup(((next) ->
 
@@ -145,7 +145,7 @@ module.exports = (models) ->
         ), 5
 
       ), { 
-        timeout: 1000 * 10, 
+        timeout: 1000 * 30, 
         retry: true, 
         retryTimeout: 500 
       }
