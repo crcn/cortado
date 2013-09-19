@@ -4,8 +4,12 @@
 #  return
 
 if typeof window.console is "undefined"
-  window.console = {}
-  window.console.log = window.console.warn = window.console.error = () ->
+  window.console = { }
+
+  window.console.log   = 
+  window.console.warn  = 
+  window.console.error = 
+  window.console.trace = () ->  
 
 
 require("./views/components")
