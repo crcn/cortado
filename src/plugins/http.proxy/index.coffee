@@ -15,13 +15,14 @@ exports.plugin = (app, config, pubsub) ->
   # fix issue with 302 redirect when location is http,http://domain.com
   proxy.on "start", (req, res, target) ->
     oldRequest = target.protocol.request
+    return if oldRequest.__shimed
     target.protocol.request = (req, cb) ->
       oldRequest.call target.protocol, req, (res) ->
         if res.statusCode in [301, 302] and res.headers.location
           res.headers.location = res.headers.location.replace("http,", "")
         cb res
-  #proxy.writeHead = () ->
-  #  console.log "WH"
+
+    target.protocol.request.__shimed = true
 
   pubsub.on "init", () ->
 
