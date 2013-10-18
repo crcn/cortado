@@ -1,6 +1,6 @@
 gaze = require "gaze"
 exports.require = ["config", "tests"]
-exports.plugin = (config, tests) ->
+exports.load = (config, tests) ->
   watch = config.get("watch")
   return if not watch or not config.get("keepAlive")
   console.log "watching %s", watch.join "\n"

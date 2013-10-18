@@ -8,7 +8,8 @@ path          = require("path")
 
 commander.
 option("--config [config_path]", "path to config (./.cortado.js)", "./.cortado.js").
-option("--full", "run full integration test");
+option("--full", "run full integration test", false).
+option("--watch", "keep process alive", false);
 
 
 commander.
@@ -17,13 +18,17 @@ description("run cortado server").
 action(function() {
 
   var cfgs = [
-    commander.config,
-    process.env.HOME + "/.cortado.js"
-  ], cfg = {};
+    process.env.HOME + "/.cortado.js",
+    commander.config
+  ], cfg = {
+    keepAlive: commander.watch,
+    full: commander.full
+  };
+
 
   for(var i = cfgs.length; i--;) {
     try {
-      cfg = _.extend(cfg, require(path.resolve(process.cwd(), cfgs[i])))
+      cfg = _.extend(require(path.resolve(process.cwd(), cfgs[i])), cfg);
     } catch(e) {
 
     }

@@ -5,7 +5,7 @@ Url        = require "url"
 
 # other middleware is loaded in so that it has priority over this plugin
 exports.require = ["express.server", "config", "http.public", "sock.server"]
-exports.plugin = (app, config, pubsub) ->
+exports.load = (app, config, pubsub) ->
 
   urlInfo = Url.parse config.get "proxy"
 

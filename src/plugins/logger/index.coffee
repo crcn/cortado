@@ -16,7 +16,7 @@ class Logger
   log: () ->
 
 
-exports.plugin = () ->
+exports.load = () ->
   
   create = (name) ->
   

@@ -2,8 +2,8 @@ async = require "async"
 Tester = require "./tester"
 Url    = require "url"
 
-exports.require = ["browser.launchers.*", "sock.clients", "tests", "config", "pubsub"]
-exports.plugin = (launcher, clients, tests, config, pubsub) ->
+exports.require = [/browser.launchers.*/, "sock.clients", "tests", "config", "pubsub"]
+exports.load = (launcher, clients, tests, config, pubsub) ->
   browsers = config.get("browsers") or []
   limit    = config.get("limit") or 1
 

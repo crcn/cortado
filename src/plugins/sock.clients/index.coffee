@@ -1,5 +1,5 @@
 Clients = require "./clients"
 
 exports.require = ["sock.server"]
-exports.plugin = (sockServer) ->
+exports.load = (sockServer) ->
   new Clients sockServer

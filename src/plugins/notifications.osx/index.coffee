@@ -2,7 +2,7 @@ spawn = require("child_process").spawn
 request = require "request"
 
 exports.require = ["config", "pubsub"]
-exports.plugin = (config, pubsub) ->
+exports.load = (config, pubsub) ->
   port = 18493
 
   startNotifier = () ->

@@ -4,7 +4,7 @@
 ###
 
 exports.require = ["sock.clients", "config"]
-exports.plugin = (clients, config) ->
+exports.load = (clients, config) ->
   
   keepAlive = config.get("keepAlive")
 

@@ -1,5 +1,5 @@
 exports.require = ["sock.clients", "tests", "pubsub"]
-exports.plugin = (clients, tests, pubsub) ->
+exports.load = (clients, tests, pubsub) ->
   
   # define the controls
   controls = 

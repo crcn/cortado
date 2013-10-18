@@ -1,7 +1,7 @@
 eyebrowse = require "eyebrowse"
 
 exports.require = ["config"]
-exports.plugin = (config) ->
+exports.load = (config) ->
   return unless config.get("eyebrowse")
   client = new eyebrowse.Client config.get("eyebrowse")
   start: (name, url, callback) ->

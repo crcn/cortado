@@ -46,7 +46,8 @@
     "paperclip-component": "0.0.x",
     "eyebrowse": "0.0.x",
     "async": "~0.2.9",
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "packages": "0.0.x"
   },
   "devDependencies": {
     "mesh": "~0.2.5",

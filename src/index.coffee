@@ -1,13 +1,15 @@
-plugin = require "plugin"
+packages = require "packages"
+bindable = require "bindable"
+
 require "colors"
 
 exports.start = (options) ->
-  plug = plugin().
-  params(options).
-  require(__dirname + "/plugins")
 
-  plug.load (err) ->
-    if err 
-      console.error err.stack
+  options.cwd = process.cwd()
 
-    plug.exports.pubsub.publish "init"
+  plug = packages().
+  require({ config: new bindable.Object(options) }).
+  require(__dirname + "/plugins").
+  load()
+
+  plug.exports.pubsub.publish "init"

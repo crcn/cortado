@@ -1,2 +1,2 @@
 express = require "express"
-exports.plugin = () -> express()
+exports.load = () -> express()

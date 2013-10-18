@@ -40,7 +40,7 @@ class Tests extends events.EventEmitter
 
 
 exports.require = ["config", "pubsub"]
-exports.plugin = (config, pubsub) -> 
+exports.load = (config, pubsub) -> 
   tests = new Tests config
   tests.on "bundle", () -> pubsub.publish "reload"
 

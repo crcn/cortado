@@ -1,5 +1,5 @@
 exports.require = ["config", "pubsub"]
-exports.plugin = (config, pubsub) ->
+exports.load = (config, pubsub) ->
   events = config.get("events") ? {}
 
   for name of events
