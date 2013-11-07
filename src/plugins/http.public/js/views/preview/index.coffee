@@ -27,8 +27,8 @@ class Preview extends require("mojojs").View
     try 
       $iframe = @$("iframe")
       iframe = $iframe[0]
-      doc = $iframe.contents()[0]
       win = iframe.contentWindow or iframe
+      doc = $iframe.contents()[0]
 
       if win.location.pathname is "/test"
         return win.location = "/"

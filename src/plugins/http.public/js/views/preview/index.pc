@@ -4,6 +4,7 @@
 </a-->
 
 <div data-bind="{{ show: true }}">
+
   {{ 
     iframe: {
       class: "test-preview",

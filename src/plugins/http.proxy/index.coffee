@@ -19,7 +19,8 @@ exports.load = (app, config, pubsub) ->
     target.protocol.request = (req, cb) ->
       oldRequest.call target.protocol, req, (res) ->
         if res.statusCode in [301, 302] and res.headers.location
-          res.headers.location = res.headers.location.replace("http,", "")
+          loc = Url.parse res.headers.location.replace("http,", "")
+          res.headers.location = loc.path
         cb res
 
     target.protocol.request.__shimed = true
