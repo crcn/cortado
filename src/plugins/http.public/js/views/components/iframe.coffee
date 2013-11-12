@@ -27,9 +27,6 @@ class IFrame extends require("mojojs").View
 
         return if value is undefined
 
-        if attr is "src"
-          value = "http://teach.classdojo.dev:8084" + value
-
         if /class|id/.test attr
           iframe.setAttribute attr, value
         else
