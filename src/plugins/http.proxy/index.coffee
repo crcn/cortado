@@ -4,8 +4,8 @@ Url        = require "url"
 
 
 # other middleware is loaded in so that it has priority over this plugin
-exports.require = ["express.server", "config", "http.public", "sock.server"]
-exports.load = (app, config, pubsub) ->
+exports.require = ["express.server", "config", "mediator", "http.public", "sock.server"]
+exports.load = (app, config, mediator) ->
 
   urlInfo = Url.parse config.get "proxy"
 
@@ -25,13 +25,14 @@ exports.load = (app, config, pubsub) ->
 
     target.protocol.request.__shimed = true
 
-  pubsub.on "init", () ->
-
+  mediator.on "pre open", (msg, next) ->
 
     app.all "/**", (req, res) ->
       p = proxy.proxyRequest(req, res, {
         host: urlInfo.hostname,
         port: urlInfo.port
       })
+
+    next()
 
 

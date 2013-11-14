@@ -2,8 +2,8 @@ async = require "async"
 Tester = require "./tester"
 Url    = require "url"
 
-exports.require = [/browser.launchers.*/, "sock.clients", "tests", "config", "pubsub"]
-exports.load = (launcher, clients, tests, config, pubsub) ->
+exports.require = [/browser.launchers.*/, "sock.clients", "tests", "config", "mediator"]
+exports.load = (launcher, clients, tests, config, mediator) ->
   browsers = config.get("browsers") or []
   limit    = config.get("limit") or 1
 
@@ -32,7 +32,9 @@ exports.load = (launcher, clients, tests, config, pubsub) ->
           hasError = true
 
 
-  pubsub.subscribe "init", tester.run
+  mediator.on "pre open", (message, next) ->
+    tester.run()
+    next()
 
 
 

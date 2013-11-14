@@ -39,8 +39,8 @@ class Tests extends events.EventEmitter
 
 
 
-exports.require = ["config", "pubsub"]
-exports.load = (config, pubsub) -> 
+exports.require = ["config", "mediator"]
+exports.load = (config, mediator) -> 
   tests = new Tests config
-  tests.on "bundle", () -> pubsub.publish "reload"
+  tests.on "bundle", () -> mediator.execute "reload"
 

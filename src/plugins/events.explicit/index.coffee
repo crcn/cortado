@@ -1,6 +1,7 @@
-exports.require = ["config", "pubsub"]
-exports.load = (config, pubsub) ->
+exports.require = ["config", "mediator"]
+exports.load = (config, mediator) ->
   events = config.get("events") ? {}
 
   for name of events
-    pubsub.subscribe name, events[name]
+    console.log name
+    mediator.on name, events[name]

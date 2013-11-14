@@ -1,5 +1,5 @@
-exports.require = ["sock.clients", "tests", "pubsub"]
-exports.load = (clients, tests, pubsub) ->
+exports.require = ["sock.clients", "tests", "mediator"]
+exports.load = (clients, tests, mediator) ->
   
   # define the controls
   controls = 
@@ -22,14 +22,14 @@ exports.load = (clients, tests, pubsub) ->
 
 
     client.on "startTests", (event) ->
-      pubsub.publish "notify", { type: "info", message: "#{browser} - tests start"}
+      mediator.execute "notify", { type: "info", message: "#{browser} - tests start"}
       console.log "%s    starting tests", browser
 
     client.on "test", (data) =>
       inf = "#{browser} - #{data.description}"
       if data.error
         console.error("%s %s %s", browser, "✘".red, data.description)
-        pubsub.publish "error", new Error inf
+        mediator.execute "error", new Error inf
         console.error("%s   ", browser, String(data.error.message).red)
       else
         console.log("%s %s %s", browser, "✔".green, data.description)
@@ -38,11 +38,12 @@ exports.load = (clients, tests, pubsub) ->
     client.on "endTests", (result) ->
       inf = "#{browser} - success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s"
       console.log "%s    %s", browser, ("completed tests, success: #{result.successCount}, errors: #{result.failureCount}, duration: #{result.duration} s")
-      pubsub.publish "notify", { type: "info", message: inf }
-      pubsub.publish "completeTests"
+      mediator.execute "notify", { type: "info", message: inf }
+      mediator.execute "completeTests"
 
-  tests.on "bundle", controls.reload
-
+  mediator.on "post reload", (msg, next) ->
+    controls.reload()
+    next()
 
   controls
 

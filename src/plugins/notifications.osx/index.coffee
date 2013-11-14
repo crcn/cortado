@@ -1,8 +1,8 @@
 spawn = require("child_process").spawn
 request = require "request"
 
-exports.require = ["config", "pubsub"]
-exports.load = (config, pubsub) ->
+exports.require = ["config", "mediator"]
+exports.load = (config, mediator) ->
   port = 18493
 
   startNotifier = () ->
@@ -20,14 +20,14 @@ exports.load = (config, pubsub) ->
       req.on "error", () ->
 
 
-  pubsub.subscribe "notify", (data) ->
+  mediator.on "notify", (data) ->
     notifier.notify data
 
 
-  pubsub.subscribe "error", (err) ->
+  mediator.on "error", (err) ->
     notifier.notify { type: "fail", message: err.message }
 
-  pubsub.subscribe "success", (data) ->
+  mediator.on "success", (data) ->
     notifier.notify { type: "pass", message: data.message }
 
   notifier

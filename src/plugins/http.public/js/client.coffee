@@ -9,7 +9,8 @@ class RemoteClient extends require("events").EventEmitter
     @_socket.onopen = @_onOpen
     @once "ready", () =>
       @_ready = true
-
+ 
+ 
   ###
   ###
 

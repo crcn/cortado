@@ -1,6 +1,0 @@
-events = require "events"
-
-exports.load = () ->
-  em = new events.EventEmitter()
-  publish: () -> em.emit arguments...
-  subscribe: () -> em.on arguments...
