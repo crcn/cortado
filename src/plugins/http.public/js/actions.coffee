@@ -64,7 +64,10 @@ fastener.add("actions", {
       @findElements path, (err, $elements) =>
         return next(err) if err?
 
+        $elements.mousedown()
+        $elements.mouseup()
         $elements.click()
+
         href = $elements.attr("href")
 
         # skip if the hash is the same, or the hash is simply #
