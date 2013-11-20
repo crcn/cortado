@@ -14,8 +14,4 @@ exports.start = (options) ->
 
   plug.exports.mediator.on "pre reload", "load"
   plug.exports.mediator.execute "load", (err) ->
-
-    if err
-      console.error err.stack
-      return process.exit(1)
     plug.exports.mediator.execute "open"
